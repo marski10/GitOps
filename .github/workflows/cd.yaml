@@ -20,3 +20,4 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
           repository: ${{ secrets.DOCKER_USERNAME }}/gitflow
           tags: ${{github.sha}},latest
+          push: true
