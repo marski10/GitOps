@@ -22,3 +22,28 @@ jobs:
           repository: ${{ secrets.DOCKER_USERNAME }}/gitflow
           tags: ${{github.sha}},latest
           push: true
+      - name: SetUp Kustomize
+        uses: imranismail/setup-kustomize@v1
+        with:
+          kustomize-version: 'v4.1.3'
+
+      - name: Update K8s Manifest
+        env: 
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+        run: |
+          cd k8s
+          kustomize edit set image goserver=$DOCKER_USERNAME/gitflow:${{github.sha}}
+
+
+      - name: Commit
+        run: |
+          git config --global user.email "actions@github.com"
+          git config --global user.name "GitHub Actions"
+          git add .
+          git commit -m "Update image to $DOCKER_USERNAME/gitflow:${{github.sha}}"
+
+      - name: Push
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          repository: marski10/GitOps
