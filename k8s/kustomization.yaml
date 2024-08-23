@@ -8,4 +8,4 @@ resources:
 images:
 - name: goserver
   newName: marquinhusbill/gitflow
-  newTag: 40097ae7d24a460022d5ea29bccde54b78900c1a
+  newTag: 40461fee3b26cacaafa39fff0415fc0a02526d90
